@@ -22,17 +22,14 @@ def carregar_dados_mysql(df_partida, nome_tabela="estatisticas_partidas"):
     
 def buscar_partidas_existentes():
     """Busca no MySQL os IDs das partidas que já foram processadas."""
-    print("🔄 Verificando histórico no banco de dados...")
+    print("Verificando histórico no banco de dados...")
     try:
         engine = create_engine(DATABASE_URI)
-        # Trazemos apenas a coluna de IDs únicos para gastar o mínimo de memória
         df = pd.read_sql("SELECT DISTINCT match_id FROM estatisticas_partidas", engine)
-        
-        # Converte a coluna do DataFrame para um set() do Python
         ids_existentes = set(df['match_id'].tolist())
         print(f"✅ {len(ids_existentes)} partidas anteriores carregadas na memória.")
         return ids_existentes
         
     except Exception as e:
-        print(f"⚠️ Erro ao buscar histórico: {e}. Iniciando com lista vazia.")
+        print(f"Erro ao buscar histórico: {e}. Iniciando com lista vazia.")
         return set()
