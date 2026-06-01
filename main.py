@@ -41,12 +41,10 @@ def executar_pipeline_etl():
         
     finally:
         tempo_total = time.time() - tempo_inicio
-        print("\n" + "="*50)
-        print("PIPELINE FINALIZADO! 🎉")
-        print(f"Partidas Únicas Processadas: {len(partidas_processadas)}")
-        print(f"Total de Linhas no Banco: {total_linhas_inseridas}")
-        print(f"Tempo de Execução: {tempo_total:.2f} segundos")
-        print("="*50)
+        print("PIPELINE FINALIZADO")
+        print(f"Partidas unicas processadas: {len(partidas_processadas)}")
+        print(f"Total de linhas no banco: {total_linhas_inseridas}")
+        print(f"Tempo de execução: {tempo_total:.2f} segundos")
 
 if __name__ == "__main__":
     executar_pipeline_etl()
