@@ -1,0 +1,8 @@
+# Extração e Variáveis de Ambiente
+requests
+python-dotenv
+pandas
+SQLAlchemy
+pymysql
+streamlit
+plotly

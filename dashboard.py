@@ -25,8 +25,6 @@ def carregar_dados():
         
         df_campeoes = pd.read_sql("SELECT * FROM vw_meta_campeoes", con=engine)
         df_rotas = pd.read_sql("SELECT * FROM vw_impacto_rotas", con=engine)
-        
-        # NOVA CONSULTA: Pega apenas o total de partidas únicas para o subtítulo
         query_total = "SELECT COUNT(DISTINCT match_id) as total FROM estatisticas_partidas"
         total_partidas = pd.read_sql(query_total, con=engine).iloc[0]['total']
         
@@ -48,6 +46,8 @@ st.markdown(f"Análise tática de **{total_formatado} partidas** da fila solo/du
 with st.sidebar:
     st.header("Parâmetros de análise")
     filtro_min_partidas = st.slider("Mínimo de partidas (campeões):", 1, 100, 15, 5)
+
+    df_meta_filtrado = pd.DataFrame() 
     
     if not df_meta.empty:
         df_meta_filtrado = df_meta[df_meta['total_partidas'] >= filtro_min_partidas]
@@ -72,7 +72,6 @@ st.divider()
 
 tab1, tab2, tab3 = st.tabs(["Visão geral dos campeões", "Análise de impacto das rotas", "Ficha técnica do campeão"])
 
-# ABA 1
 with tab1:
     st.header("Performance do meta")
     
@@ -174,7 +173,6 @@ with tab1:
                 fig_mortes.update_layout(xaxis=dict(showgrid=False, visible=False), margin=dict(t=10, b=10, l=10, r=10), dragmode=False)
                 st.plotly_chart(fig_mortes, use_container_width=True, config={'displayModeBar': False})
 
-# ABA 2
 with tab2:
     st.header("Eficiência por posição")
     
@@ -226,7 +224,6 @@ with tab2:
             fig_donut.update_layout(height=450, showlegend=False, dragmode=False) 
             st.plotly_chart(fig_donut, use_container_width=True, config={'displayModeBar': False})
 
-# ABA 3
 with tab3:
     st.header("Ficha técnica do campeão")
     st.markdown("Busque um campeão específico para visualizar suas métricas detalhadas baseadas no meta Challenger.")
